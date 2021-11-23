@@ -2,7 +2,7 @@
   "name": "simple-crud-api",
   "version": "1.0.0",
   "description": "Simple CRUD API",
-  "main": "index.js",
+  "main": "src/app.js",
   "type": "module",
   "scripts": {
     "eslint": "eslint src/ --debug --fix",
