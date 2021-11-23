@@ -17,5 +17,14 @@
   "bugs": {
     "url": "https://github.com/gupalooleg/simple-crud-api/issues"
   },
-  "homepage": "https://github.com/gupalooleg/simple-crud-api#readme"
+  "homepage": "https://github.com/gupalooleg/simple-crud-api#readme",
+  "devDependencies": {
+    "eslint": "^8.3.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-prettier": "^4.0.0",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.4.1"
+  }
 }
