@@ -1,5 +1,4 @@
 import * as http from 'http';
-import { URL } from 'url';
 import { ServerError, AppError } from './error/index.js';
 import { MESSAGES, formatString } from './common/index.js';
 import { PersonController } from './controller/index.js';
@@ -10,9 +9,9 @@ function runServer() {
   http
     .createServer((req, res) => {
       try {
-        const url = new URL(req.url, `http://${req.headers.host}`);
+        const url = decodeURIComponent(req.url);
 
-        if (url.pathname === '/person') {
+        if (url === '/person' || (url.startsWith('/person/') && url !== '/person/')) {
           const personController = new PersonController();
           switch (req.method) {
             case 'GET':
@@ -34,7 +33,7 @@ function runServer() {
               );
           }
         } else {
-          throw new ServerError(formatString(MESSAGES.RESOURCE_NOT_FOUND, [url.pathname]), 404);
+          throw new ServerError(formatString(MESSAGES.RESOURCE_NOT_FOUND, [url]), 404);
         }
       } catch (e) {
         res.statusCode = e.statusCode ?? 500;
