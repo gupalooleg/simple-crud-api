@@ -5,7 +5,7 @@
   "main": "src/app.js",
   "type": "module",
   "scripts": {
-    "start:dev": "nodemon src/app.js",
+    "start:dev": "nodemon -r dotenv/config src/app.js",
     "eslint": "eslint src/ --debug --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -30,6 +30,7 @@
     "prettier": "^2.4.1"
   },
   "dependencies": {
+    "dotenv": "^10.0.0",
     "uuid": "^8.3.2"
   }
 }
