@@ -7,20 +7,12 @@ import {
   errorResponseHandler,
   successResponseHandler,
   getDataFromRequest,
+  extractIdFromRequest,
 } from '../common/index.js';
 
 class PersonController {
   constructor() {
     this.personModel = new PersonModel();
-  }
-
-  #extractIdFromRequest(req) {
-    const url = decodeURIComponent(req.url);
-
-    const indexSecondSlash = url.indexOf('/', 1);
-    if (indexSecondSlash !== -1) {
-      return url.slice(indexSecondSlash + 1);
-    }
   }
 
   #checkRequiredFields(personData) {
@@ -41,7 +33,7 @@ class PersonController {
   async get(req, res) {
     try {
       let personInfo;
-      const id = this.#extractIdFromRequest(req);
+      const id = extractIdFromRequest(req);
       if (id) {
         if (!uuidValidate(id)) {
           throw new PersonControllerError(formatString(MESSAGES.ID_IS_NOT_VALID, [id]), 400);
@@ -77,7 +69,7 @@ class PersonController {
 
   async put(req, res) {
     try {
-      const id = this.#extractIdFromRequest(req);
+      const id = extractIdFromRequest(req);
       if (!id) {
         throw new PersonControllerError(MESSAGES.ID_NOT_SPECIFIED, 400);
       }
@@ -103,7 +95,7 @@ class PersonController {
 
   async delete(req, res) {
     try {
-      const id = this.#extractIdFromRequest(req);
+      const id = extractIdFromRequest(req);
       if (!id) {
         throw new PersonControllerError(MESSAGES.ID_NOT_SPECIFIED, 400);
       }
