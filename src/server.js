@@ -1,6 +1,6 @@
 import * as http from 'http';
-import { ServerError, AppError } from './error/index.js';
-import { MESSAGES, formatString } from './common/index.js';
+import { ServerError } from './error/index.js';
+import { MESSAGES, formatString, errorResponseHandler } from './common/index.js';
 import { PersonController } from './controller/index.js';
 
 const port = process.env.PORT || 3000;
@@ -9,9 +9,9 @@ function runServer() {
   http
     .createServer((req, res) => {
       try {
-        const url = decodeURIComponent(req.url);
+        // const url = decodeURIComponent(req.url);
 
-        if (url === '/person' || (url.startsWith('/person/') && url !== '/person/')) {
+        if (req.url === '/person' || req.url.startsWith('/person/')) {
           const personController = new PersonController();
           switch (req.method) {
             case 'GET':
@@ -33,16 +33,10 @@ function runServer() {
               );
           }
         } else {
-          throw new ServerError(formatString(MESSAGES.RESOURCE_NOT_FOUND, [url]), 404);
+          throw new ServerError(formatString(MESSAGES.RESOURCE_NOT_FOUND, [req.url]), 404);
         }
-      } catch (e) {
-        res.statusCode = e.statusCode ?? 500;
-        res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-        res.end(e.message);
-
-        if (!(e instanceof AppError)) {
-          console.log(e);
-        }
+      } catch (err) {
+        errorResponseHandler(res, err);
       }
     })
     .listen(port, () => {
