@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start:dev": "nodemon -r dotenv/config src/app.js",
+    "start:prod": "webpack && node -r dotenv/config ./dist/app.bundle.js",
     "eslint": "eslint src/ --debug --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -27,7 +28,9 @@
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-prettier": "^4.0.0",
     "nodemon": "^2.0.15",
-    "prettier": "^2.4.1"
+    "prettier": "^2.4.1",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1"
   },
   "dependencies": {
     "dotenv": "^10.0.0",
